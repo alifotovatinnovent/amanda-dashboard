@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: amanda-dashboard
+    runtime: static
+    staticPublishPath: .
+    buildCommand: ""
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /amanda-dashboard.html
