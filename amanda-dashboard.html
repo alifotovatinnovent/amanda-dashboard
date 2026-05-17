@@ -3,27 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Acceleration Command Center</title>
+    <title>Amanda - Executive Command Center</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
             color: #2d3748;
         }
-
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-
+        
+        .container { max-width: 1800px; margin: 0 auto; }
+        
         header {
             background: white;
             padding: 30px;
@@ -31,7 +24,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             margin-bottom: 30px;
         }
-
+        
         h1 {
             font-size: 2.5rem;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -39,411 +32,445 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
         }
-
-        .subtitle {
-            color: #718096;
-            font-size: 1.1rem;
-        }
-
-        /* Process Flow Section */
-        .process-flow {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        
+        .subtitle { color: #718096; font-size: 1.1rem; }
+        
+        /* Quick Actions Bar */
+        .quick-actions {
+            display: flex;
+            gap: 15px;
             margin-bottom: 30px;
+            flex-wrap: wrap;
         }
-
-        .flow-diagram {
+        
+        .action-btn {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin: 30px 0;
-            overflow-x: auto;
-            padding: 20px 0;
+            gap: 10px;
+            font-weight: 500;
         }
-
-        .flow-step {
-            flex: 1;
-            min-width: 180px;
-            text-align: center;
-            position: relative;
-        }
-
-        .flow-step:not(:last-child)::after {
-            content: '→';
-            position: absolute;
-            right: -20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 2rem;
-            color: #667eea;
-        }
-
-        .flow-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 10px;
-            font-size: 2rem;
-        }
-
-        .flow-label {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .flow-desc {
-            font-size: 0.85rem;
-            color: #718096;
-        }
-
-        /* Campaign Grid */
-        .campaigns-grid {
+        
+        .action-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .action-btn.urgent { background: #fed7d7; color: #742a2a; }
+        
+        /* Main Grid */
+        .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
             margin-bottom: 30px;
         }
-
-        .campaign-card {
+        
+        .section {
             background: white;
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-
-        .campaign-header {
+        
+        .section-header {
             display: flex;
             justify-content: space-between;
-            align-items: start;
+            align-items: center;
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 2px solid #e2e8f0;
         }
-
-        .campaign-title {
+        
+        h2 {
             font-size: 1.3rem;
-            font-weight: 600;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-
-        .campaign-company {
-            color: #718096;
-            font-size: 0.9rem;
-        }
-
-        .status-badge {
-            padding: 6px 12px;
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 500;
         }
-
-        .status-active { background: #c6f6d5; color: #22543d; }
-        .status-hot { background: #fed7d7; color: #742a2a; animation: pulse 2s infinite; }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        /* Step Progress */
-        .steps-progress {
-            margin: 20px 0;
-        }
-
-        .step-item {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            margin-bottom: 10px;
+        
+        .badge-urgent { background: #fed7d7; color: #742a2a; }
+        .badge-hot { background: #feebc8; color: #7c2d12; }
+        .badge-normal { background: #bee3f8; color: #2c5282; }
+        
+        /* Task Items */
+        .task-item {
+            padding: 15px;
+            margin-bottom: 12px;
             background: #f7fafc;
             border-radius: 8px;
             border-left: 4px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-
-        .step-item.completed {
-            border-left-color: #48bb78;
+        
+        .task-item:hover { background: #edf2f7; }
+        .task-item.urgent { border-left-color: #fc8181; }
+        .task-item.hot { border-left-color: #f6ad55; }
+        
+        .task-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-
-        .step-item.in-progress {
-            border-left-color: #ed8936;
+        
+        .task-meta {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 5px;
         }
-
-        .step-icon {
-            margin-right: 12px;
-            font-size: 1.2rem;
+        
+        /* Campaign Cards */
+        .campaign-mini {
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #f7fafc;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-
-        .step-content {
-            flex: 1;
-        }
-
-        .step-title {
-            font-weight: 500;
-            margin-bottom: 4px;
-        }
-
-        .step-details {
+        
+        .campaign-name { font-weight: 500; }
+        .campaign-status {
+            display: flex;
+            gap: 10px;
             font-size: 0.85rem;
             color: #718096;
         }
-
-        /* Results Section */
-        .results-grid {
+        
+        /* Marketing Content */
+        .content-item {
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #f7fafc;
+            border-radius: 6px;
+        }
+        
+        .content-title { font-weight: 500; margin-bottom: 5px; }
+        .content-status { font-size: 0.85rem; color: #718096; }
+        
+        /* Stats Grid */
+        .stats-mini {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 20px 0;
+            gap: 10px;
+            margin-top: 15px;
         }
-
-        .result-card {
-            background: #f7fafc;
-            padding: 15px;
-            border-radius: 8px;
+        
+        .stat-mini {
             text-align: center;
+            padding: 10px;
+            background: #f7fafc;
+            border-radius: 6px;
         }
-
-        .result-label {
-            font-size: 0.8rem;
-            color: #718096;
-            margin-bottom: 5px;
-        }
-
-        .result-value {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #2d3748;
-        }
-
-        .result-source {
-            font-size: 0.75rem;
+        
+        .stat-value { font-size: 1.5rem; font-weight: bold; color: #2d3748; }
+        .stat-label { font-size: 0.75rem; color: #718096; margin-top: 3px; }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
             color: #a0aec0;
-            margin-top: 3px;
         }
-
-        /* AI Recommendations */
-        .ai-recommendations {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 12px;
-            margin-top: 20px;
-        }
-
-        .ai-recommendations h3 {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-
-        .ai-recommendations h3::before {
-            content: '🤖';
-            margin-right: 10px;
-            font-size: 1.5rem;
-        }
-
-        .recommendation-item {
-            background: rgba(255,255,255,0.1);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            backdrop-filter: blur(10px);
-        }
-
-        .recommendation-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .recommendation-priority {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-right: 8px;
-        }
-
-        .priority-high { background: #fc8181; }
-        .priority-medium { background: #f6ad55; }
-        .priority-low { background: #68d391; }
-
-        h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 1024px) {
-            .campaigns-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .results-grid {
-                grid-template-columns: 1fr;
-            }
+        
+        @media (max-width: 1200px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📊 Sales Acceleration Command Center</h1>
-            <p class="subtitle">Real-time visibility into the entire sales process • Powered by Serena AI</p>
+            <h1>☕ Amanda - Executive Command Center</h1>
+            <p class="subtitle">Your Complete Operations Dashboard • All Systems Monitored</p>
         </header>
 
-        <!-- Process Flow -->
-        <div class="process-flow">
-            <h2>🔄 How The Process Works</h2>
-            <div class="flow-diagram">
-                <div class="flow-step">
-                    <div class="flow-icon">📝</div>
-                    <div class="flow-label">1. You Submit</div>
-                    <div class="flow-desc">Add proposal details via Serena dashboard</div>
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="action-btn urgent">
+                <span>🔥</span>
+                <div>
+                    <div style="font-size: 0.9rem;">Urgent Tasks</div>
+                    <div style="font-size: 0.75rem; color: #718096;">3 items need attention</div>
                 </div>
-                <div class="flow-step">
-                    <div class="flow-icon">🔍</div>
-                    <div class="flow-label">2. Research</div>
-                    <div class="flow-desc">Apollo enriches contacts, finds stakeholders</div>
+            </div>
+            <div class="action-btn">
+                <span>📊</span>
+                <div>
+                    <div style="font-size: 0.9rem;">Active Campaigns</div>
+                    <div style="font-size: 0.75rem; color: #718096;">5 running</div>
                 </div>
-                <div class="flow-step">
-                    <div class="flow-icon">🎯</div>
-                    <div class="flow-label">3. Plan</div>
-                    <div class="flow-desc">Serena creates multi-channel campaign</div>
+            </div>
+            <div class="action-btn">
+                <span>📝</span>
+                <div>
+                    <div style="font-size: 0.9rem;">Marketing Content</div>
+                    <div style="font-size: 0.75rem; color: #718096;">2 drafts ready</div>
                 </div>
-                <div class="flow-step">
-                    <div class="flow-icon">📧</div>
-                    <div class="flow-label">4. Execute</div>
-                    <div class="flow-desc">Emails + LinkedIn outreach</div>
-                </div>
-                <div class="flow-step">
-                    <div class="flow-icon">📊</div>
-                    <div class="flow-label">5. Monitor</div>
-                    <div class="flow-desc">Track engagement & adapt</div>
-                </div>
-                <div class="flow-step">
-                    <div class="flow-icon">🤝</div>
-                    <div class="flow-label">6. Close</div>
-                    <div class="flow-desc">Hot lead handoff to you</div>
+            </div>
+            <div class="action-btn">
+                <span>⏳</span>
+                <div>
+                    <div style="font-size: 0.9rem;">Pending Items</div>
+                    <div style="font-size: 0.75rem; color: #718096;">4 waiting on you</div>
                 </div>
             </div>
         </div>
 
-        <!-- Active Campaigns -->
-        <h2 style="color: white; margin-bottom: 20px;">📋 Active Campaigns</h2>
-        <div class="campaigns-grid" id="campaigns-container">
+        <!-- Main Grid -->
+        <div class="dashboard-grid">
             
-            <!-- Campaign 1: SSMC INNFINI (Example) -->
-            <div class="campaign-card">
-                <div class="campaign-header">
-                    <div>
-                        <div class="campaign-title">SSMC INNFINI Phase 1</div>
-                        <div class="campaign-company">Sheikh Shakhbout Medical City • AED 2.5M</div>
-                    </div>
-                    <span class="status-badge status-hot">🔥 HOT</span>
+            <!-- Open Tasks (What Needs Ali's Action) -->
+            <div class="section">
+                <div class="section-header">
+                    <h2>🎯 Open Tasks</h2>
+                    <span class="badge badge-urgent">3 URGENT</span>
                 </div>
-
-                <!-- Steps Progress -->
-                <div class="steps-progress">
-                    <div class="step-item completed">
-                        <div class="step-icon">✅</div>
-                        <div class="step-content">
-                            <div class="step-title">Research Complete</div>
-                            <div class="step-details">Found 5 stakeholders via Apollo</div>
-                        </div>
+                
+                <div class="task-item urgent">
+                    <div class="task-title">
+                        <span>SSMC INNFINI - CMO Requesting Demo</span>
+                        <span class="badge badge-urgent">URGENT</span>
                     </div>
-
-                    <div class="step-item completed">
-                        <div class="step-icon">✅</div>
-                        <div class="step-content">
-                            <div class="step-title">Campaign Planned</div>
-                            <div class="step-details">5-touch sequence (Email + LinkedIn)</div>
-                        </div>
-                    </div>
-
-                    <div class="step-item in-progress">
-                        <div class="step-icon">⏳</div>
-                        <div class="step-content">
-                            <div class="step-title">Outreach Active</div>
-                            <div class="step-details">3 emails sent, 2 LinkedIn connections</div>
-                        </div>
-                    </div>
-
-                    <div class="step-item">
-                        <div class="step-icon">📊</div>
-                        <div class="step-content">
-                            <div class="step-title">Monitoring Engagement</div>
-                            <div class="step-details">Scheduled: May 18-21</div>
-                        </div>
+                    <div class="task-meta">
+                        🔥 Hot Lead • Dr. Sarah Jones opened email 3x • Buying signal detected<br>
+                        <strong>Action:</strong> Schedule demo within 24 hours
                     </div>
                 </div>
 
-                <!-- Results -->
-                <div class="results-grid">
-                    <div class="result-card">
-                        <div class="result-label">Contacts</div>
-                        <div class="result-value">5</div>
-                        <div class="result-source">Apollo</div>
+                <div class="task-item urgent">
+                    <div class="task-title">
+                        <span>PureHealth Campaign - CFO Reply</span>
+                        <span class="badge badge-urgent">URGENT</span>
                     </div>
-                    <div class="result-card">
-                        <div class="result-label">Emails Sent</div>
-                        <div class="result-value">3</div>
-                        <div class="result-source">Outlook</div>
-                    </div>
-                    <div class="result-card">
-                        <div class="result-label">LinkedIn</div>
-                        <div class="result-value">2</div>
-                        <div class="result-source">MeetAlfred</div>
+                    <div class="task-meta">
+                        💬 CFO replied: "Send me the financial breakdown"<br>
+                        <strong>Action:</strong> Send ROI model + payback analysis
                     </div>
                 </div>
 
-                <!-- AI Recommendations -->
-                <div class="ai-recommendations">
-                    <h3>AI-Powered Next Actions</h3>
-                    <div class="recommendation-item">
-                        <span class="recommendation-priority priority-high">HIGH</span>
-                        <strong>CMO showing interest:</strong> Dr. Jones opened email 3x. Send technical deep-dive within 24h.
+                <div class="task-item hot">
+                    <div class="task-title">
+                        <span>EDGE Project - Weekly Update Due</span>
+                        <span class="badge badge-hot">DUE TODAY</span>
                     </div>
-                    <div class="recommendation-item">
-                        <span class="recommendation-priority priority-medium">MEDIUM</span>
-                        <strong>CFO cold:</strong> Pivot to ROI-focused case study. Emphasize payback period.
+                    <div class="task-meta">
+                        📅 Weekly stakeholder update<br>
+                        <strong>Action:</strong> Review dashboard, send summary email
                     </div>
-                    <div class="recommendation-item">
-                        <span class="recommendation-priority priority-low">LOW</span>
-                        <strong>Expand reach:</strong> Found 3 more stakeholders via Sales Navigator. Add to campaign?
+                </div>
+
+                <div class="task-item">
+                    <div class="task-title">
+                        <span>Apollo API Key Setup</span>
+                        <span class="badge badge-normal">SETUP</span>
+                    </div>
+                    <div class="task-meta">
+                        🔧 Serena ready for full automation<br>
+                        <strong>Action:</strong> Provide Apollo.io API key (5 min)
                     </div>
                 </div>
             </div>
 
-            <!-- Add more campaign cards dynamically -->
-            <div class="campaign-card" style="border: 2px dashed #cbd5e0; display: flex; align-items: center; justify-content: center; min-height: 400px; opacity: 0.6;">
-                <div style="text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 10px;">➕</div>
-                    <div style="font-size: 1.1rem; font-weight: 600;">Add New Campaign</div>
-                    <div style="font-size: 0.9rem; color: #718096; margin-top: 5px;">Go to Serena Dashboard to create</div>
+            <!-- Pending Items (Waiting on Ali) -->
+            <div class="section">
+                <div class="section-header">
+                    <h2>⏳ Pending on You</h2>
+                    <span class="badge badge-hot">4 ITEMS</span>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-title">
+                        <span>SSMC Proposal - Decision Expected</span>
+                    </div>
+                    <div class="task-meta">
+                        📊 Sent: May 7 • Follow-ups: 3 sent • Status: Warm<br>
+                        <strong>Waiting:</strong> SSMC internal review (procurement approval)
+                    </div>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-title">
+                        <span>Gargash CFO Brief - Feedback Pending</span>
+                    </div>
+                    <div class="task-meta">
+                        📄 Delivered: May 10 • Last contact: May 15<br>
+                        <strong>Waiting:</strong> CFO to review and schedule follow-up meeting
+                    </div>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-title">
+                        <span>Marketing Content - Your Review Needed</span>
+                    </div>
+                    <div class="task-meta">
+                        📝 2 drafts ready (LinkedIn posts + case study)<br>
+                        <strong>Waiting:</strong> Your approval to publish
+                    </div>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-title">
+                        <span>MeetAlfred API Key</span>
+                    </div>
+                    <div class="task-meta">
+                        🔧 Needed for LinkedIn automation<br>
+                        <strong>Waiting:</strong> You to provide API key (5 min)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Follow-Up Management (Serena Campaigns) -->
+            <div class="section">
+                <div class="section-header">
+                    <h2>📧 Follow-Up Management</h2>
+                    <span style="font-size: 0.9rem; color: #718096;">Serena AI • Auto-Pilot</span>
+                </div>
+
+                <div class="campaign-mini">
+                    <div>
+                        <div class="campaign-name">SSMC INNFINI Phase 1</div>
+                        <div style="font-size: 0.85rem; color: #718096;">Week 2/4 • 5 stakeholders • AED 2.5M</div>
+                    </div>
+                    <div class="campaign-status">
+                        <span>🔥 HOT</span>
+                        <span>68% engaged</span>
+                    </div>
+                </div>
+
+                <div class="campaign-mini">
+                    <div>
+                        <div class="campaign-name">PureHealth Digital Transformation</div>
+                        <div style="font-size: 0.85rem; color: #718096;">Week 1/4 • 3 stakeholders • AED 1.8M</div>
+                    </div>
+                    <div class="campaign-status">
+                        <span>✅ Active</span>
+                        <span>45% engaged</span>
+                    </div>
+                </div>
+
+                <div class="campaign-mini">
+                    <div>
+                        <div class="campaign-name">RAK Hospital Operations</div>
+                        <div style="font-size: 0.85rem; color: #718096;">Week 3/4 • 7 stakeholders • AED 3.2M</div>
+                    </div>
+                    <div class="campaign-status">
+                        <span>⏳ Monitoring</span>
+                        <span>52% engaged</span>
+                    </div>
+                </div>
+
+                <div class="stats-mini">
+                    <div class="stat-mini">
+                        <div class="stat-value">49</div>
+                        <div class="stat-label">Emails Sent</div>
+                    </div>
+                    <div class="stat-mini">
+                        <div class="stat-value">23</div>
+                        <div class="stat-label">Opens</div>
+                    </div>
+                    <div class="stat-mini">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">Replies</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campaign Management -->
+            <div class="section">
+                <div class="section-header">
+                    <h2>📊 Campaign Overview</h2>
+                    <span style="font-size: 0.9rem; color: #718096;">All Active Projects</span>
+                </div>
+
+                <div class="campaign-mini">
+                    <div>
+                        <div class="campaign-name">SSMC Re-engagement Campaign</div>
+                        <div style="font-size: 0.85rem; color: #718096;">49/60 emails • Multi-channel • May 7-28</div>
+                    </div>
+                    <div class="campaign-status">
+                        <span>✅ On Track</span>
+                    </div>
+                </div>
+
+                <div class="campaign-mini">
+                    <div>
+                        <div class="campaign-name">EDGE Project Tracking</div>
+                        <div style="font-size: 0.85rem; color: #718096;">Dashboard deployed • Weekly updates</div>
+                    </div>
+                    <div class="campaign-status">
+                        <span>✅ Active</span>
+                    </div>
+                </div>
+
+                <div class="campaign-mini">
+                    <div>
+                        <div class="campaign-name">SEO Leadership Initiative</div>
+                        <div style="font-size: 0.85rem; color: #718096;">Audit complete • 90-day plan ready</div>
+                    </div>
+                    <div class="campaign-status">
+                        <span>⏳ Awaiting Start</span>
+                    </div>
+                </div>
+
+                <div class="campaign-mini">
+                    <div>
+                        <div class="campaign-name">EGF Funding Application</div>
+                        <div style="font-size: 0.85rem; color: #718096;">Research done • Docs prepared</div>
+                    </div>
+                    <div class="campaign-status">
+                        <span>📋 Ready to Submit</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Marketing Content -->
+            <div class="section">
+                <div class="section-header">
+                    <h2>📝 Marketing Content</h2>
+                    <span class="badge badge-hot">2 DRAFTS</span>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-title">LinkedIn Post - INNFINI Success Story</div>
+                    <div class="content-status">
+                        ✏️ Draft ready • 350 words • Highlighting 72% efficiency gain<br>
+                        <strong>Status:</strong> Awaiting your review
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-title">Case Study - Hospital Asset Tracking ROI</div>
+                    <div class="content-status">
+                        📄 Draft ready • 1,200 words • Cleveland Clinic example<br>
+                        <strong>Status:</strong> Awaiting your approval
+                    </div>
+                </div>
+
+                <div class="empty-state" style="padding: 20px; margin-top: 15px; background: #f7fafc; border-radius: 8px;">
+                    <div style="font-size: 0.9rem; color: #718096;">
+                        💡 <strong>Marketing Content Module</strong><br>
+                        Ready to help with content creation, LinkedIn posts, case studies, and more.<br>
+                        <em>Details and full capabilities: Awaiting your briefing</em>
+                    </div>
                 </div>
             </div>
 
         </div>
 
     </div>
-
-    <script>
-        // Update timestamp periodically
-        function updateTimestamp() {
-            const now = new Date();
-            // Can add real-time updates here
-        }
-
-        // Initial load
-        updateTimestamp();
-        setInterval(updateTimestamp, 60000); // Update every minute
-
-        // Future: Load real campaign data from API
-        // fetch('/api/campaigns').then(...)
-    </script>
 </body>
 </html>
