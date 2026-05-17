@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amanda - Task Dashboard</title>
+    <title>Sales Acceleration Command Center</title>
     <style>
         * {
             margin: 0;
@@ -20,7 +20,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
@@ -45,252 +45,405 @@
             font-size: 1.1rem;
         }
 
-        .status-grid {
+        /* Process Flow Section */
+        .process-flow {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 30px 0;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+
+        .flow-step {
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            position: relative;
+        }
+
+        .flow-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #667eea;
+        }
+
+        .flow-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 2rem;
+        }
+
+        .flow-label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .flow-desc {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        /* Campaign Grid */
+        .campaigns-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
 
-        .status-card {
+        .campaign-card {
             background: white;
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .status-label {
+        .campaign-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .campaign-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .campaign-company {
             color: #718096;
             font-size: 0.9rem;
-            margin-bottom: 8px;
         }
 
-        .status-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #2d3748;
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
 
-        .main-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
+        .status-active { background: #c6f6d5; color: #22543d; }
+        .status-hot { background: #fed7d7; color: #742a2a; animation: pulse 2s infinite; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
-        .section {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        /* Step Progress */
+        .steps-progress {
+            margin: 20px 0;
         }
 
-        h2 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: #2d3748;
-        }
-
-        .task-item {
-            border-left: 4px solid #667eea;
-            padding: 15px;
-            margin-bottom: 15px;
+        .step-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
             background: #f7fafc;
-            border-radius: 4px;
+            border-radius: 8px;
+            border-left: 4px solid #e2e8f0;
         }
 
-        .task-item.completed {
-            border-color: #48bb78;
-            opacity: 0.7;
+        .step-item.completed {
+            border-left-color: #48bb78;
         }
 
-        .task-item.in-progress {
-            border-color: #ed8936;
+        .step-item.in-progress {
+            border-left-color: #ed8936;
         }
 
-        .task-title {
-            font-weight: 600;
-            margin-bottom: 5px;
+        .step-icon {
+            margin-right: 12px;
+            font-size: 1.2rem;
         }
 
-        .task-meta {
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .step-details {
             font-size: 0.85rem;
             color: #718096;
         }
 
-        .activity-item {
-            padding: 12px;
-            border-bottom: 1px solid #e2e8f0;
+        /* Results Section */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
         }
 
-        .activity-item:last-child {
-            border-bottom: none;
+        .result-card {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
         }
 
-        .activity-time {
+        .result-label {
             font-size: 0.8rem;
+            color: #718096;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .result-source {
+            font-size: 0.75rem;
             color: #a0aec0;
+            margin-top: 3px;
         }
 
-        .activity-text {
-            margin-top: 4px;
-            font-size: 0.9rem;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 10px;
+        /* AI Recommendations */
+        .ai-recommendations {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
             border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin-left: 10px;
+            margin-top: 20px;
         }
 
-        .badge-active {
-            background: #c6f6d5;
-            color: #22543d;
+        .ai-recommendations h3 {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
         }
 
-        .badge-complete {
-            background: #bee3f8;
-            color: #2c5282;
+        .ai-recommendations h3::before {
+            content: '🤖';
+            margin-right: 10px;
+            font-size: 1.5rem;
         }
 
-        .badge-pending {
-            background: #feebc8;
-            color: #7c2d12;
+        .recommendation-item {
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .recommendation-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .recommendation-priority {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .priority-high { background: #fc8181; }
+        .priority-medium { background: #f6ad55; }
+        .priority-low { background: #68d391; }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
         }
 
         @media (max-width: 1024px) {
-            .main-content {
+            .campaigns-grid {
                 grid-template-columns: 1fr;
             }
-        }
-
-        .update-time {
-            text-align: center;
-            margin-top: 20px;
-            color: white;
-            font-size: 0.9rem;
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>☕ Amanda Frosche</h1>
-            <p class="subtitle">Executive Assistant AI • Active Tasks & Projects</p>
+            <h1>📊 Sales Acceleration Command Center</h1>
+            <p class="subtitle">Real-time visibility into the entire sales process • Powered by Serena AI</p>
         </header>
 
-        <div class="status-grid">
-            <div class="status-card">
-                <div class="status-label">Active Tasks</div>
-                <div class="status-value" id="active-tasks">3</div>
-            </div>
-            <div class="status-card">
-                <div class="status-label">Completed Today</div>
-                <div class="status-value" id="completed-today">5</div>
-            </div>
-            <div class="status-card">
-                <div class="status-label">Projects</div>
-                <div class="status-value" id="projects">2</div>
-            </div>
-            <div class="status-card">
-                <div class="status-label">Uptime</div>
-                <div class="status-value" id="uptime">23h</div>
-            </div>
-        </div>
-
-        <div class="main-content">
-            <div class="section">
-                <h2>📋 Current Tasks</h2>
-                <div id="tasks-list">
-                    <div class="task-item in-progress">
-                        <div class="task-title">🎯 Build Serena Agent <span class="badge badge-active">IN PROGRESS</span></div>
-                        <div class="task-meta">Sales acceleration AI • Started: 13:23 GMT+4</div>
-                    </div>
-
-                    <div class="task-item completed">
-                        <div class="task-title">✅ Renew Outlook Authentication <span class="badge badge-complete">COMPLETE</span></div>
-                        <div class="task-meta">Microsoft Graph OAuth • Completed: 10:38 GMT+4</div>
-                    </div>
-
-                    <div class="task-item completed">
-                        <div class="task-title">✅ Fix Calendar Date Calculation <span class="badge badge-complete">COMPLETE</span></div>
-                        <div class="task-meta">Added date verification to AGENTS.md • Completed: 12:40 GMT+4</div>
-                    </div>
-
-                    <div class="task-item completed">
-                        <div class="task-title">✅ Create Calendar Invite (Wednesday 4:30 PM) <span class="badge badge-complete">COMPLETE</span></div>
-                        <div class="task-meta">Teams meeting scheduled for May 20 • Completed: 12:02 GMT+4</div>
-                    </div>
-
-                    <div class="task-item">
-                        <div class="task-title">📧 Email Inbox Monitoring <span class="badge badge-active">ACTIVE</span></div>
-                        <div class="task-meta">318 emails, 257 unread • Last check: Ongoing</div>
-                    </div>
+        <!-- Process Flow -->
+        <div class="process-flow">
+            <h2>🔄 How The Process Works</h2>
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <div class="flow-icon">📝</div>
+                    <div class="flow-label">1. You Submit</div>
+                    <div class="flow-desc">Add proposal details via Serena dashboard</div>
                 </div>
-            </div>
-
-            <div class="section">
-                <h2>📊 Recent Activity</h2>
-                <div id="activity-log">
-                    <div class="activity-item">
-                        <div class="activity-time">13:35 GMT+4</div>
-                        <div class="activity-text">📦 Deployed Serena integrations layer</div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-time">13:30 GMT+4</div>
-                        <div class="activity-text">🔌 Connected Apollo, MeetAlfred, Pipeline2 APIs</div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-time">13:23 GMT+4</div>
-                        <div class="activity-text">🎯 Built Serena agent core logic</div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-time">12:40 GMT+4</div>
-                        <div class="activity-text">📝 Updated AGENTS.md with calendar rules</div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-time">12:02 GMT+4</div>
-                        <div class="activity-text">📅 Created calendar event (May 20, 16:30)</div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-time">10:38 GMT+4</div>
-                        <div class="activity-text">🔐 Renewed Outlook tokens successfully</div>
-                    </div>
+                <div class="flow-step">
+                    <div class="flow-icon">🔍</div>
+                    <div class="flow-label">2. Research</div>
+                    <div class="flow-desc">Apollo enriches contacts, finds stakeholders</div>
                 </div>
-
-                <h2 style="margin-top: 30px;">🚀 Active Projects</h2>
-                <div class="task-item in-progress">
-                    <div class="task-title">Serena (Sales AI)</div>
-                    <div class="task-meta">Status: MVP built, deploying to Render</div>
+                <div class="flow-step">
+                    <div class="flow-icon">🎯</div>
+                    <div class="flow-label">3. Plan</div>
+                    <div class="flow-desc">Serena creates multi-channel campaign</div>
                 </div>
-                <div class="task-item">
-                    <div class="task-title">SSMC Re-engagement</div>
-                    <div class="task-meta">Status: 49/60 emails sent, monitoring</div>
+                <div class="flow-step">
+                    <div class="flow-icon">📧</div>
+                    <div class="flow-label">4. Execute</div>
+                    <div class="flow-desc">Emails + LinkedIn outreach</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-icon">📊</div>
+                    <div class="flow-label">5. Monitor</div>
+                    <div class="flow-desc">Track engagement & adapt</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-icon">🤝</div>
+                    <div class="flow-label">6. Close</div>
+                    <div class="flow-desc">Hot lead handoff to you</div>
                 </div>
             </div>
         </div>
 
-        <div class="update-time">
-            Last updated: <span id="last-update">Just now</span>
+        <!-- Active Campaigns -->
+        <h2 style="color: white; margin-bottom: 20px;">📋 Active Campaigns</h2>
+        <div class="campaigns-grid" id="campaigns-container">
+            
+            <!-- Campaign 1: SSMC INNFINI (Example) -->
+            <div class="campaign-card">
+                <div class="campaign-header">
+                    <div>
+                        <div class="campaign-title">SSMC INNFINI Phase 1</div>
+                        <div class="campaign-company">Sheikh Shakhbout Medical City • AED 2.5M</div>
+                    </div>
+                    <span class="status-badge status-hot">🔥 HOT</span>
+                </div>
+
+                <!-- Steps Progress -->
+                <div class="steps-progress">
+                    <div class="step-item completed">
+                        <div class="step-icon">✅</div>
+                        <div class="step-content">
+                            <div class="step-title">Research Complete</div>
+                            <div class="step-details">Found 5 stakeholders via Apollo</div>
+                        </div>
+                    </div>
+
+                    <div class="step-item completed">
+                        <div class="step-icon">✅</div>
+                        <div class="step-content">
+                            <div class="step-title">Campaign Planned</div>
+                            <div class="step-details">5-touch sequence (Email + LinkedIn)</div>
+                        </div>
+                    </div>
+
+                    <div class="step-item in-progress">
+                        <div class="step-icon">⏳</div>
+                        <div class="step-content">
+                            <div class="step-title">Outreach Active</div>
+                            <div class="step-details">3 emails sent, 2 LinkedIn connections</div>
+                        </div>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-icon">📊</div>
+                        <div class="step-content">
+                            <div class="step-title">Monitoring Engagement</div>
+                            <div class="step-details">Scheduled: May 18-21</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-label">Contacts</div>
+                        <div class="result-value">5</div>
+                        <div class="result-source">Apollo</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Emails Sent</div>
+                        <div class="result-value">3</div>
+                        <div class="result-source">Outlook</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">LinkedIn</div>
+                        <div class="result-value">2</div>
+                        <div class="result-source">MeetAlfred</div>
+                    </div>
+                </div>
+
+                <!-- AI Recommendations -->
+                <div class="ai-recommendations">
+                    <h3>AI-Powered Next Actions</h3>
+                    <div class="recommendation-item">
+                        <span class="recommendation-priority priority-high">HIGH</span>
+                        <strong>CMO showing interest:</strong> Dr. Jones opened email 3x. Send technical deep-dive within 24h.
+                    </div>
+                    <div class="recommendation-item">
+                        <span class="recommendation-priority priority-medium">MEDIUM</span>
+                        <strong>CFO cold:</strong> Pivot to ROI-focused case study. Emphasize payback period.
+                    </div>
+                    <div class="recommendation-item">
+                        <span class="recommendation-priority priority-low">LOW</span>
+                        <strong>Expand reach:</strong> Found 3 more stakeholders via Sales Navigator. Add to campaign?
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add more campaign cards dynamically -->
+            <div class="campaign-card" style="border: 2px dashed #cbd5e0; display: flex; align-items: center; justify-content: center; min-height: 400px; opacity: 0.6;">
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">➕</div>
+                    <div style="font-size: 1.1rem; font-weight: 600;">Add New Campaign</div>
+                    <div style="font-size: 0.9rem; color: #718096; margin-top: 5px;">Go to Serena Dashboard to create</div>
+                </div>
+            </div>
+
         </div>
+
     </div>
 
     <script>
-        // Update timestamp
-        function updateTime() {
+        // Update timestamp periodically
+        function updateTimestamp() {
             const now = new Date();
-            document.getElementById('last-update').textContent = now.toLocaleTimeString('en-US', {
-                hour12: false,
-                hour: '2-digit',
-                minute: '2-digit',
-                timeZone: 'Asia/Dubai'
-            }) + ' GMT+4';
+            // Can add real-time updates here
         }
-        
-        updateTime();
-        setInterval(updateTime, 30000); // Update every 30 seconds
+
+        // Initial load
+        updateTimestamp();
+        setInterval(updateTimestamp, 60000); // Update every minute
+
+        // Future: Load real campaign data from API
+        // fetch('/api/campaigns').then(...)
     </script>
 </body>
 </html>
